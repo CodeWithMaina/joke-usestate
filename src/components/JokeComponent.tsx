@@ -1,5 +1,5 @@
 import type { JokeComponentProps } from "../types/types";
-
+import "./JokeComponent.css"
 
 const JokeComponent = ({ joke, onDelete, onEdit }: JokeComponentProps) => {
   return (
