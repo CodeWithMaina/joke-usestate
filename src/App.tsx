@@ -42,6 +42,17 @@ function App() {
     startEditing(newJoke);
   };
 
+  const handleRatingChange = (id: number, newRating: number) => {
+    // Ensure rating stays within bounds (1-5)
+    const clampedRating = Math.max(1, Math.min(5, newRating));
+    
+    setJokes(jokes.map(joke => 
+      joke.id === id 
+        ? { ...joke, rating: clampedRating } 
+        : joke
+    ));
+  };
+
   return (
     <div className="app">
       <button onClick={handleAdd} className="add-button">Add New Joke</button>
@@ -51,6 +62,13 @@ function App() {
           <textarea 
             value={editText} 
             onChange={(e) => setEditText(e.target.value)} 
+          />
+          <input 
+            type="number" 
+            min="1" 
+            max="5" 
+            value={editRating} 
+            onChange={(e) => setEditRating(parseInt(e.target.value))} 
           />
           <button onClick={handleEdit}>Save</button>
           <button onClick={() => setEditingId(null)}>Cancel</button>
@@ -64,6 +82,7 @@ function App() {
             joke={joke} 
             onDelete={handleDelete}
             onEdit={startEditing}
+            onRatingChange={handleRatingChange}
           />
         ))}
       </div>
